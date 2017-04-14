@@ -1,18 +1,31 @@
 require "dont_comment/version"
 require 'parser/current'
+require 'stringio'
 
 module DontComment
   def self.execute(argv)
     files = argv
-    files.each do |fname|
-      parser = Parser::CurrentRuby.new
+    # TODO: configuralbe ruby version
+    parser_class = Parser::CurrentRuby
+    sum = files.map do |fname|
+      parser = parser_class.new
       buffer = buffer(fname)
       locs = comment_locations(parser, buffer)
-      locs.each do |loc|
-        puts to_text(loc)
-        p '----------------------------'
+
+      ruby_code_locs  =locs.select do |loc|
+        text = to_text(loc)
+        parsable?(parser_class, text) &&
+          like_ruby_code?(text)
       end
-    end
+
+      ruby_code_locs.each do |loc|
+        puts "#{fname}:#{loc.line}: Do not comment out Ruby code"
+        text = to_text(loc)
+        puts text.each_line.map{|line| "  #{line}"}.join
+      end
+      ruby_code_locs.size
+    end.sum
+    p sum
   end
 
   def self.buffer(fname)
@@ -69,5 +82,37 @@ module DontComment
     source.each_line.map do |line|
       line[/^\s*\#(.+)$/, 1]
     end.join("\n")
+  end
+
+  # @param parser_class [Class]
+  # @param source [String]
+  # @return [true|false]
+  def self.parsable?(parser_class, source)
+    stderr = $stderr
+    $stderr = StringIO.new
+
+    parser_class.parse(source)
+    return true
+  rescue Parser::SyntaxError
+    return false
+  ensure
+    $stderr = stderr
+  end
+
+  # Check ascii
+  # @param source [String]
+  # @return [true|false]
+  def self.like_ruby_code?(source)
+    count_ascii = 0
+    count_non_ascii = 0
+    chars = source.chars.each do |ch|
+      if ch.match?(/[[:ascii:]]/)
+        count_ascii += 1
+      else
+        count_non_ascii += 1
+      end
+    end
+
+    count_ascii / (count_ascii + count_non_ascii).to_f > 0.7
   end
 end
