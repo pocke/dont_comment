@@ -12,7 +12,7 @@ module DontComment
       buffer = buffer(fname)
       locs = comment_locations(parser, buffer)
 
-      ruby_code_locs  =locs.select do |loc|
+      ruby_code_locs = locs.select do |loc|
         text = to_text(loc)
         parsable?(parser_class, text) &&
           like_ruby_code?(text)
