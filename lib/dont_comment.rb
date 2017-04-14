@@ -8,7 +8,10 @@ module DontComment
       parser = Parser::CurrentRuby.new
       buffer = buffer(fname)
       locs = comment_locations(parser, buffer)
-      p locs
+      locs.each do |loc|
+        puts to_text(loc)
+        p '----------------------------'
+      end
     end
   end
 
@@ -57,5 +60,14 @@ module DontComment
   # @param cur [Parser::Source::Range]
   def self.range_between(prev, cur)
     Parser::Source::Range.new(prev.source_buffer, prev.end_pos, cur.begin_pos)
+  end
+
+  # @param loc [Parser::Source::Range]
+  # @return [String]
+  def self.to_text(loc)
+    source = loc.source
+    source.each_line.map do |line|
+      line[/^\s*\#(.+)$/, 1]
+    end.join("\n")
   end
 end
