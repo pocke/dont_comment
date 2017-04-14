@@ -105,7 +105,7 @@ module DontComment
   def self.like_ruby_code?(source)
     count_ascii = 0
     count_non_ascii = 0
-    chars = source.chars.each do |ch|
+    source.chars.each do |ch|
       if ch.match?(/[[:ascii:]]/)
         count_ascii += 1
       else
