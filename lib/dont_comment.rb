@@ -19,9 +19,16 @@ module DontComment
       end
 
       ruby_code_locs.each do |loc|
-        puts "#{fname}:#{loc.line}: Do not comment out Ruby code"
+        path = relative_path(fname)
+        puts "#{path}:#{loc.line}: Do not comment out Ruby code"
       end
     end
+  end
+
+  def self.relative_path(path)
+    pwd = Pathname.pwd
+    absolute_path = pwd.join(path)
+    absolute_path.relative_path_from(pwd)
   end
 
   def self.buffer(fname)
