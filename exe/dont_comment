@@ -1,0 +1,5 @@
+#!ruby
+
+require 'dont_comment'
+
+DontComment.execute(ARGV)
