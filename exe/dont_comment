@@ -2,4 +2,4 @@
 
 require 'dont_comment'
 
-DontComment.execute(ARGV)
+DontComment::CLI.new(ARGV).run
