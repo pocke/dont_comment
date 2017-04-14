@@ -1,0 +1,11 @@
+# To use the MeowCop gem.
+inherit_gem:
+  meowcop:
+    - config/rubocop.yml
+
+# Modify the version if you don't use MRI 2.1.
+AllCops:
+  TargetRubyVersion: 2.3
+
+Rails:
+  Enabled: false
