@@ -57,6 +57,10 @@ Or install it yourself as:
 
     $ gem install dont_comment
 
+### Requirements
+
+- Ruby 2.4 or higher
+
 ## Usage
 
 ```bash
