@@ -7,7 +7,6 @@ module DontComment
     files.each do |file|
       parser = Parser::CurrentRuby.new
       _ast, comment, _tokens = parser.tokenize(buffer(file))
-      p comment
     end
   end
 
