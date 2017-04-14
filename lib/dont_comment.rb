@@ -7,7 +7,7 @@ module DontComment
     files = argv
     # TODO: configuralbe ruby version
     parser_class = Parser::CurrentRuby
-    sum = files.map do |fname|
+    files.map do |fname|
       parser = parser_class.new
       buffer = buffer(fname)
       locs = comment_locations(parser, buffer)
@@ -20,12 +20,8 @@ module DontComment
 
       ruby_code_locs.each do |loc|
         puts "#{fname}:#{loc.line}: Do not comment out Ruby code"
-        text = to_text(loc)
-        puts text.each_line.map{|line| "  #{line}"}.join
       end
-      ruby_code_locs.size
-    end.sum
-    p sum
+    end
   end
 
   def self.buffer(fname)
