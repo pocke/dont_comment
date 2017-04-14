@@ -11,7 +11,7 @@ class TestIntegration < Minitest::Test
     lines = stdout.each_line.to_a
     assert { lines.size == 2 }
 
-    assert { lines[0].chomp == 'test/data/sample.rb:3: Do not comment out Ruby code'}
-    assert { lines[1].chomp == 'test/data/sample.rb:7: Do not comment out Ruby code'}
+    assert { lines[0].chomp == 'test/data/sample.rb:3: Do not comment out unused code, use version control system instead and remove it!'}
+    assert { lines[1].chomp == 'test/data/sample.rb:7: Do not comment out unused code, use version control system instead and remove it!'}
   end
 end
