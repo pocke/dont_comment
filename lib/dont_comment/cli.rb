@@ -7,9 +7,10 @@ module DontComment
       json: Formatter::JSON,
     }
 
-    def initialize(argv)
+    def initialize(argv, out = $stdout)
       @argv = argv
       @config = default_config
+      @out = out
     end
 
     def run
@@ -18,7 +19,7 @@ module DontComment
 
       files = @argv
       offenses = Runner.new(files).run
-      formatter_class.new(offenses).format($stdout)
+      formatter_class.new(offenses).format(@out)
     end
 
     private
