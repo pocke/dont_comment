@@ -11,8 +11,8 @@ class TestFormatterSimple < Minitest::Test
     io = StringIO.new
     f.format(io)
     expected = <<~END
-      hoge.rb:1: Do not comment out Ruby code
-      fuga.rb:42: Do not comment out Ruby code
+      hoge.rb:1: Do not comment out unused code, use version control system instead and remove it!
+      fuga.rb:42: Do not comment out unused code, use version control system instead and remove it!
     END
     assert { io.string == expected}
   end
