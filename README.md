@@ -1,5 +1,8 @@
 # DontComment
 
+[![Gem Version](https://badge.fury.io/rb/dont_comment.svg)](https://badge.fury.io/rb/dont_comment)
+[![Build Status](https://travis-ci.org/pocke/dont_comment.svg?branch=master)](https://travis-ci.org/pocke/dont_comment)
+
 Do not comment out unused code, use version control system instead and remove it!
 
 
